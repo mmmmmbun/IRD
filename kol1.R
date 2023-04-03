@@ -1,16 +1,16 @@
 # Kolokwium 13.06.2018r.
 
-#Wczytujê pakiety (nie wszystkie konieczne)
+#WczytujÄ™ pakiety (nie wszystkie konieczne)
 library(readr) # do wczytywania danych
 library(data.table) 
 library("tidyverse") # do przeksztalcania danych
 library("dplyr") #umozliwia manipulacje danych zarowno zapisanych w formie ramek danych
-library(ggplot2) #rysowanie wykresów
+library(ggplot2) #rysowanie wykresÃ³w
 library(tidyverse)
 library(rpart) # do drzewa
 library(rpart.plot) # do rysowania drzewa
 library(randomForest) # do budowy (zasadzenia?) lasu losowego
-library(caret) # do oceny wynikÃ³w
+library(caret) # do oceny wynikÄ‚Å‚w
 library(ROCR) # do krzywej ROC
 library("arules") # do znajdowania regul
 library("arulesViz") # do wizualizacji regul
@@ -19,15 +19,15 @@ library("arulesViz") # do wizualizacji regul
 
 # a)
 
-# Tworzê funkcjê
+# TworzÄ™ funkcjÄ™
 aa <- function(x) {
-  if(is.numeric(x) == FALSE) {print("x nie jest wartoœci¹ numeryczn¹")}
+  if(is.numeric(x) == FALSE) {print("x nie jest wartoÅ›ciÄ… numerycznÄ…")}
   else if(x>=10){return(x^(1/3))}
   else if(x< 10 && x> -10) {return(1/2 * abs(x))}
   else if(x<= -10) {return(log10(abs(x)))} 
 }
 
-# Sprawdzam funkcjê
+# Sprawdzam funkcjÄ™
 aa("sa")
 aa(-10)
 aa(-2)
@@ -36,40 +36,40 @@ aa(15)
 aa(1000)
 aa(0)
 
-# b) Liczby ca³kowite od -15 do 15
+# b) Liczby caÅ‚kowite od -15 do 15
 lcalk <- -15L:15L
 
-# Stosujê funkcjê na tych liczbach
+# StosujÄ™ funkcjÄ™ na tych liczbach
 y <- sapply(lcalk, aa)
 
-# Rysujê wykres
+# RysujÄ™ wykres
 plot(x=lcalk, y=y, type='p', col = 'blue',
-     xlab = "Wartoœæ od -15 do 15", ylab = "Wynik funkcji",
+     xlab = "WartoÅ›Ä‡ od -15 do 15", ylab = "Wynik funkcji",
      main = "funkcja aa na zbiorze lcalk")
 
 # Zad 2
 
-# £adujê dane
+# ÅadujÄ™ dane
 library(datasets)
 data("airquality")
 head(airquality)
 str(airquality)
 library(dplyr)
 
-# Liczebnoœæ grup, min, max (Sortujê po miesi¹cu)
+# LiczebnoÅ›Ä‡ grup, min, max (SortujÄ™ po miesiÄ…cu)
 by_Month <- group_by(airquality, Month)
 statystyki <- summarise(by_Month,
-          liczebnoœæ = n(),
+          liczebnoÅ›Ä‡ = n(),
           minimalna = min(Wind),
           maksymalna = max(Wind)
 )
 
-# Prezentujê statystyki w konsoli
+# PrezentujÄ™ statystyki w konsoli
 statystyki
 
 library(ggplot2)
 
-# Rysujê wykres na podstawie pakietu ggplot2
+# RysujÄ™ wykres na podstawie pakietu ggplot2
 ggplot(statystyki)   +
   geom_line( 
     aes( x = Month, y = maksymalna)) +
@@ -81,7 +81,7 @@ ggplot(statystyki)   +
 
 # Zad3
 
-# £adujê dane
+# ÅadujÄ™ dane
 HRdane <- read.csv("HR_comma_sep.csv")
 head(HRdane)
 str(HRdane)
@@ -90,15 +90,15 @@ str(HRdane)
 HRdane$left <- factor(HRdane$left)
 str(HRdane)
 
-# Ustawiam zierno i dzielê na zbiór ucz¹cy i testowy
+# Ustawiam zierno i dzielÄ™ na zbiÃ³r uczÄ…cy i testowy
 set.seed(68331)
 train_proportion <- 0.75
 train_index <- runif(nrow(HRdane)) < train_proportion
 train <- HRdane[train_index,]
 test <- HRdane[!train_index,]
 
-# Budujê dwa modele - pierwszy tylko z dwoma zmiennymi niezale¿nymi, drugi ze wszystkimi zmiennymi
-# niezale¿nymi oprócz left
+# BudujÄ™ dwa modele - pierwszy tylko z dwoma zmiennymi niezaleÅ¼nymi, drugi ze wszystkimi zmiennymi
+# niezaleÅ¼nymi oprÃ³cz left
 
 tree1 <- rpart(left ~ satisfaction_level + salary, 
                data=train,
@@ -108,18 +108,18 @@ tree2 <- rpart(left ~.,
                data=train,
                method="class")
 
-# Wygl¹d drzew
+# WyglÄ…d drzew
 rpart.plot(tree1, under=FALSE, tweak=1.3, fallen.leaves = TRUE)
 rpart.plot(tree2, under=FALSE, tweak=1.3, fallen.leaves = TRUE)
 
-# Tworzê listê z macierzami b³êdów modelu pierwszego oraz drugiego
+# TworzÄ™ listÄ™ z macierzami bÅ‚Ä™dÃ³w modelu pierwszego oraz drugiego
 CM <- list()
 CM[["tree1"]] <- table(predict(tree1, new = test, type = "class"), test$left)
 CM[["tree2"]] <- table(predict(tree2, new = test, type = "class"), test$left)
-# Wygl¹d macierzy b³edów
+# WyglÄ…d macierzy bÅ‚edÃ³w
 CM
 
-# Tworzê funkcjê oceniaj¹c¹ model
+# TworzÄ™ funkcjÄ™ oceniajÄ…cÄ… model
 
 EvaluateModel <- function(classif_mx)
 {
@@ -144,14 +144,14 @@ EvaluateModel <- function(classif_mx)
 EvaluateModel(CM$tree1)
 EvaluateModel(CM$tree2)
 
-# Tworzê prognozê ci¹g³¹ dla obu modeli w celu stworzenia krzywej ROC
+# TworzÄ™ prognozÄ™ ciÄ…gÅ‚Ä… dla obu modeli w celu stworzenia krzywej ROC
 prognoza_ciagla <- predict(tree1, newdata = test)
 prognoza_ciagla <- as.vector(prognoza_ciagla[,2])
 
 prognoza_ciagla2 <- predict(tree2, newdata = test)
 prognoza_ciagla2 <- as.vector(prognoza_ciagla2[,2])
 
-# Tworzê krzyw¹ ROC - potrzebuje "ciaglej" prognozy
+# TworzÄ™ krzywÄ… ROC - potrzebuje "ciaglej" prognozy
 plot(performance(prediction(prognoza_ciagla,test$left),"tpr","fpr"),lwd=2, colorize=T) 
 plot(performance(prediction(prognoza_ciagla2,test$left),"tpr","fpr"),lwd=2, colorize=T) 
 
@@ -159,31 +159,31 @@ plot(performance(prediction(prognoza_ciagla2,test$left),"tpr","fpr"),lwd=2, colo
 performance(prediction(prognoza_ciagla, test$left),"auc")
 performance(prediction(prognoza_ciagla2, test$left),"auc")
 
-# Rysujê wykres: stosunek czu³oœci do specyficznoœci (Sensitivity/specificity plots ~ trade-off)
+# RysujÄ™ wykres: stosunek czuÅ‚oÅ›ci do specyficznoÅ›ci (Sensitivity/specificity plots ~ trade-off)
 plot(performance(prediction(prognoza_ciagla,test$left),"sens","spec"),lwd=2) 
 plot(performance(prediction(prognoza_ciagla2,test$left),"sens","spec"),lwd=2) 
 
-# Rysujê krzyw¹ Lift dla obu modeli
+# RysujÄ™ krzywÄ… Lift dla obu modeli
 plot(performance(prediction(prognoza_ciagla,test$left),"lift","rpp"),lwd=2, col = "darkblue") 
 plot(performance(prediction(prognoza_ciagla2,test$left),"lift","rpp"),lwd=2, col = "darkblue")
 
-# Drugi model jest lepszy od pierwszego, poniewa¿ (w nawiasach wartoœci otrzymane przy
-# wywo³ywaniu przeze mnie kodu) : 
+# Drugi model jest lepszy od pierwszego, poniewaÅ¼ (w nawiasach wartoÅ›ci otrzymane przy
+# wywoÅ‚ywaniu przeze mnie kodu) : 
 
-# 1. Odznacza siê wy¿sz¹ sprawnoœci¹ (Accuracy1 = 0.8986339 < Accuracy2 = 0.9639344), 
-# czuloœci¹ (Sensitivity1 = 0.9589671 < Sensitivity2 = 0.9805447) oraz specyficznoœci¹ 
+# 1. Odznacza siÄ™ wyÅ¼szÄ… sprawnoÅ›ciÄ… (Accuracy1 = 0.8986339 < Accuracy2 = 0.9639344), 
+# czuloÅ›ciÄ… (Sensitivity1 = 0.9589671 < Sensitivity2 = 0.9805447) oraz specyficznoÅ›ciÄ… 
 # (Specificity1 = 0.6938776 < Specificity2 = 0.907563)
 
-# 2. Krzywa ROC dla drugiego modelu jest nad krzyw¹ ROC dla pierwszego modelu
+# 2. Krzywa ROC dla drugiego modelu jest nad krzywÄ… ROC dla pierwszego modelu
 
-# 3. Pole pod krzyw¹ ROC drugiego modelu jest wiêksze ni¿ to pod krzyw¹ ROC pierwszego
+# 3. Pole pod krzywÄ… ROC drugiego modelu jest wiÄ™ksze niÅ¼ to pod krzywÄ… ROC pierwszego
 # modelu AUC1 = 0.8343477 < AUC2 = 0.9661865
 
-# 4. Krzywa zale¿noœci pomiêdzy czu³oœci¹, a specyficznoœci¹ drugiego modelu jest ponad t¹
-# sam¹ krzyw¹ z modelu pierwszego
+# 4. Krzywa zaleÅ¼noÅ›ci pomiÄ™dzy czuÅ‚oÅ›ciÄ…, a specyficznoÅ›ciÄ… drugiego modelu jest ponad tÄ…
+# samÄ… krzywÄ… z modelu pierwszego
 
-# 5. Drugi model odznacza siê lepsz¹ krzyw¹ Lift, czyli ogólny zysk z wykorzystania modelu drugiego
-# w stosunku do modelu losowego jest wiêkszy ni¿ ten sam zystk z wykorzystania modelu pierwszego
+# 5. Drugi model odznacza siÄ™ lepszÄ… krzywÄ… Lift, czyli ogÃ³lny zysk z wykorzystania modelu drugiego
+# w stosunku do modelu losowego jest wiÄ™kszy niÅ¼ ten sam zystk z wykorzystania modelu pierwszego
 
 # Zad 4
 
@@ -192,40 +192,40 @@ dane4na <- read.csv("HR_comma_sep.csv")
 head(dane4na)
 str(dane4na)
 summarise(dane4na)
-# Pozbywam siê NA
+# Pozbywam siÄ™ NA
 dane4 <- na.omit(dane4na)
-# Tworzê kolumnê ze œredniej liczbie godzin pracy w ci¹gu dnia i dodajê j¹ do danych
+# TworzÄ™ kolumnÄ™ ze Å›redniej liczbie godzin pracy w ciÄ…gu dnia i dodajÄ™ jÄ… do danych
 dane4 <- mutate(dane4,
        average_daily_hours = average_montly_hours/21)
 str(dane4)
 
-# Tworzê tabelê spe³niaj¹c¹ wymagania zadania
+# TworzÄ™ tabelÄ™ speÅ‚niajÄ…cÄ… wymagania zadania
 tabela <- dane4 %>%
   select(sales, salary, average_daily_hours) %>%
   group_by(sales, salary) %>%
   summarise(
-    œredniagodzindni = round(average_daily_hours),2) %>%
-  arrange(œredniagodzindni)
+    Å›redniagodzindni = round(average_daily_hours),2) %>%
+  arrange(Å›redniagodzindni)
 
-# Wyœwietlam posortowan¹ tabelê
+# WyÅ›wietlam posortowanÄ… tabelÄ™
 tabela
 
 
 # Zad 5
 
-# Wczytujê dane
+# WczytujÄ™ dane
 dane5na <- read.csv("HR_comma_sep.csv")
 head(dane5na)
 str(dane5na)
 summarise(dane5na)
-# Pozbywam siê NA
+# Pozbywam siÄ™ NA
 dane5 <- na.omit(dane5na)
 
-# Zmieniam wartoœci w kolumnie left na typ czynnikowy
+# Zmieniam wartoÅ›ci w kolumnie left na typ czynnikowy
 dane5$left <- factor(dane5$left)
 str(dane5)
 
-# Ustawiam ziarno i tworzê zbiór ucz¹cy i testowy
+# Ustawiam ziarno i tworzÄ™ zbiÃ³r uczÄ…cy i testowy
 set.seed(68331)
 train_proportion <- 0.75
 train_index <- runif(nrow(HRdane)) < train_proportion
@@ -234,18 +234,18 @@ test <- HRdane[!train_index,]
 
 library(randomForest)
 
-# Tworzê las losowy
+# TworzÄ™ las losowy
 rf <- randomForest(left ~., data = train)
 
-# Sprawdzam, co odegra³o najwiêksz¹ rolê
+# Sprawdzam, co odegraÅ‚o najwiÄ™kszÄ… rolÄ™
 varImpPlot(rf) 
 
-# Tworzê macierz b³edu
+# TworzÄ™ macierz bÅ‚edu
 Macierzbledu <- rf_classif_mx <- table(predict(rf, new = test, type = "class"), test$left)
-# Wywo³ujê macierz b³edu
+# WywoÅ‚ujÄ™ macierz bÅ‚edu
 Macierzbledu
 
-# Rysujê krzyw¹ ROC dla lasu
+# RysujÄ™ krzywÄ… ROC dla lasu
 forecast <- predict(rf, newdata = test, type = "prob")[,2]
 plottingData <- prediction(forecast, test$left)
 plot(performance(plottingData,"tpr","fpr"),lwd=2, colorize=T)
@@ -254,5 +254,5 @@ AUC <- performance(plottingData,"auc")@y.values[[1]]
 AUC
 # AUC wynosi w moim przypadku 0.9902431
 
-# Tworzê krzyw¹ Lift
+# TworzÄ™ krzywÄ… Lift
 plot(performance(plottingData ,"lift","rpp"),lwd=2, col = "darkblue") 
