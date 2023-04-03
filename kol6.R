@@ -45,8 +45,8 @@ data("flights")
 loty <- flights %>% group_by(origin,dest) %>%
    dplyr::summarise(Liczba_polaczen=n(),
              Unikalne_polaczenia=n_distinct(tailnum),
-             ¦redni_czas_wpowietrzu=mean(air_time,na.rm=T),
-             ¦redni_Dystans=mean(distance,na.rm=T))
+             Â¦redni_czas_wpowietrzu=mean(air_time,na.rm=T),
+             Â¦redni_Dystans=mean(distance,na.rm=T))
 loty
 loty2 <- loty %>% mutate(Unikalne_loty=Unikalne_polaczenia/Liczba_polaczen)
 loty2
@@ -77,7 +77,7 @@ rf <- randomForest(diabetes ~., data = train,ntree=50)
 dtree <- rpart(diabetes ~., data = train,  method = "class",maxdepth=5)
 
 dtree$variable.importance
-#Glukoza ma najwiêkszy wp³Yw na zmienn± prognozowan± w drzewie decyzyjnym
+#Glukoza ma najwiÃªkszy wpÂ³Yw na zmiennÂ± prognozowanÂ± w drzewie decyzyjnym
 
 
 CM <- list()
@@ -100,14 +100,14 @@ tree <- Ewal(CM[["drzewo"]])
 forest <- Ewal(CM[["forest"]])
 cbind(forest,tree)
 
-#Lepszym modelem jest forest bo mniej siê myli (mniejsze missclassifiaction) i rzadziej przyporzadkowuje klase pozytywna prawdziwej klasie negatywnej
+#Lepszym modelem jest forest bo mniej siÃª myli (mniejsze missclassifiaction) i rzadziej przyporzadkowuje klase pozytywna prawdziwej klasie negatywnej
 
 forecast <- predict(rf, newdata = test, type = "prob")[,2]
 plottingData <- ROCR::prediction(forecast, test$diabetes)
 
 
 AUC <- performance(plottingData,"auc")@y.values[[1]]
-cat("Warto¶æ AUC:",AUC)
+cat("WartoÂ¶Ã¦ AUC:",AUC)
 
 # Lift chart
 plot(performance(plottingData ,"lift","rpp"),lwd=2, col = "darkblue") 
@@ -136,7 +136,7 @@ drzreg <- rpart(Sales~.,cp=0.01,data=train)
 
 rpart.plot(drzreg, under=FALSE, fallen.leaves = FALSE, cex = 0.7)
 
-#Regu³a
+#ReguÂ³a
 #Dla shelving location jakosci bad/medium i ceny mniejszej niz 107 oraz wieku mniejszego 
 #niz 35 sprzedano srednio 11 tys fotelikow dla dzieci
 
@@ -146,10 +146,10 @@ modele <- list("drzewo" = drzreg, "regresja" = reglin)
 
 OcenaModeli <- function(modele, dane, predicted_col_name) {
    
-   print("Pierwiastek b³êdu ¶redniokwadratowego RMSE")
+   print("Pierwiastek bÂ³Ãªdu Â¶redniokwadratowego RMSE")
    print(sapply(modele, function(x) sqrt(sum((dane[[predicted_col_name]] - predict(x, dane))^2)/nrow(dane)) ))
    
-   print("Wzglêdny b³±d  absolutny RAE")
+   print("WzglÃªdny bÂ³Â±d  absolutny RAE")
    print(sapply(modele, function(x) sum(abs((dane[[predicted_col_name]] - predict(x, dane))))/sum(abs(dane[[predicted_col_name]] - mean(dane[[predicted_col_name]]))) ))
    
 }
