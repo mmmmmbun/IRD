@@ -18,7 +18,7 @@ wektor_sum_kolmn <- LiczSumyKolumn(macierz)
 
 wektor_sum_kolmn[wektor_sum_kolmn <0]
 #===================================================================ZADANIE2
-setwd("C:/Users/Maciej/OneDrive - Szko³a G³ówna Handlowa w Warszawie/SGH/VI SEMESTR/IRD/ÆWICZENIA/exam")
+setwd("C:/Users/Maciej/OneDrive - SzkoÂ³a GÂ³Ã³wna Handlowa w Warszawie/SGH/VI SEMESTR/IRD/Ã†WICZENIA/exam")
 siema <- read.csv(file="FITNESS.csv")
 
 cat("Liczba obserwacji: ",nrow(siema))
@@ -39,7 +39,7 @@ library("dplyr")
 data("Hitters")
 
 table(is.na(Hitters))
-cat("Liczba braków danych:",table(is.na(Hitters))[2])
+cat("Liczba brakÃ³w danych:",table(is.na(Hitters))[2])
 cat("59 obserwacji pustych")
 sum(apply(Hitters,1,anyNA))
 czyszcz <- na.omit(Hitters)
@@ -77,7 +77,7 @@ las <- randomForest(Private ~., data = train)
 
 rpart.plot(drzewo, under=FALSE, fallen.leaves = FALSE, cex = 0.7)
 
-#przyk³adowa regu³a: 
+#przykÂ³adowa reguÂ³a: 
 #Jezeli idziesz do kolledzu poza swoj stan to jest 96% na to ze to bedzie koledz prywatny
 
 
