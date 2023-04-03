@@ -25,15 +25,15 @@ foobar(100)
 
 chicks2<- chickwts %>%
   group_by(feed) %>%
-   summarize(Liczebno¶æ  = n(),
-          ¦rednia = mean(weight),
+   summarize(LiczebnoÂ¶Ã¦  = n(),
+          Â¦rednia = mean(weight),
           Mediana = median(weight))
 
  
  ggplot(chicks2,
    aes(x=feed,y=Mediana))+
      geom_boxplot()+
-     labs(title="Mediana wagi kurczaka w zale¿no¶ci od karmy")+
+     labs(title="Mediana wagi kurczaka w zaleÂ¿noÂ¶ci od karmy")+
      xlab("Typ karmy")+
      ylab("Mediana wagi kurczaka")
 #ZADANIE3======================================================================
@@ -60,15 +60,15 @@ modele <- list("reglin" = reglin, "drzreg" = drzreg)
 
 OcenaModeli <- function(modele, dane, predicted_col_name) {
   
-  print("¦redni b³±d absolutny MAE")
+  print("Â¦redni bÂ³Â±d absolutny MAE")
   print(sapply(modele, function(x) sum(abs((dane[[predicted_col_name]] - predict(x, dane))))/nrow(dane) ))
   
-  print("B³±d ¶redniokwadratowy MSE")
+  print("BÂ³Â±d Â¶redniokwadratowy MSE")
   print(sapply(modele, function(x) sum((dane[[predicted_col_name]] - predict(x, dane))^2)/nrow(dane)) )}
   
 OcenaModeli(modele, test, 'Duration')
 
-#REGLIN BÊDZIE LEPSZA -> MA MNIEJSZE B£EDY OBA
+#REGLIN BÃŠDZIE LEPSZA -> MA MNIEJSZE BÂ£EDY OBA
 #ZADANIE4======================================================================
 library(mlbench)
 help(data("HouseVotes84"))
@@ -94,8 +94,8 @@ dtree <- rpart(Class ~V1+V2+V3+V4, data = train,  method = "class")
 rpart.plot(dtree, under=FALSE, fallen.leaves = FALSE, cex = 0.9)
 
 
-#REGU£A DECYZYJNA
-#Je¿eli zag³osowa³e¶ przeciwko przyjeciu budzetu to jestes na 47% republikaniem
+#REGUÂ£A DECYZYJNA
+#JeÂ¿eli zagÂ³osowaÂ³eÂ¶ przeciwko przyjeciu budzetu to jestes na 47% republikaniem
 
 CM <- list()
 CM[["drzewo"]] <- table(predict(rf, new = test, type = "class"), test$Class)
@@ -109,4 +109,4 @@ return(list(Accuracy,Precision))}
 
  sprawdzanko(CM[["drzewo"]])
  sprawdzanko(CM[["forest"]])
- #Accuracy i precision s± wiêksze dla drzewa, wiêc wybieramy je
+ #Accuracy i precision sÂ± wiÃªksze dla drzewa, wiÃªc wybieramy je
